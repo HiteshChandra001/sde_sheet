@@ -212,5 +212,103 @@ class Solution {
 }
 ```
 
+# Longest Substring Without Repeating Characters
+
+This repository contains a Java solution for the **Longest Substring Without Repeating Characters** problem, a classic **sliding window** problem frequently asked in coding interviews and competitive programming platforms like LeetCode.
+
+---
+
+## 🧩 Problem Statement
+
+Given a string `s`, find the length of the **longest substring** without repeating characters.
+
+---
+
+## 💡 Approach (Sliding Window + HashMap)
+
+The solution uses the **sliding window technique** combined with a `HashMap` to efficiently track characters and their most recent positions.
+
+### Key Ideas:
+
+* Maintain a window `[st, i]` that always contains unique characters
+* Use a `HashMap<Character, Integer>` to store the **last seen index + 1** of each character
+* When a duplicate character is found, move the start of the window (`st`) forward
+* Keep updating the maximum window length
+
+This approach avoids unnecessary re-checking and runs in linear time.
+
+---
+
+## 🧠 Algorithm Steps
+
+1. Initialize:
+
+   * `st` → start index of the sliding window
+   * `res` → maximum length found so far
+   * `map` → stores last seen position of characters
+
+2. Iterate through the string using index `i`:
+
+   * If the current character already exists in the map:
+
+     * Update `st` to `max(st, map.get(character))`
+   * Calculate the current window length: `i - st + 1`
+   * Update `res`
+   * Store the character with value `i + 1` in the map
+
+3. Return `res`
+
+---
+
+## ⏱️ Time & Space Complexity
+
+* **Time Complexity:** `O(n)`
+* **Space Complexity:** `O(min(n, charset))`
+
+Where `n` is the length of the string.
+
+---
+
+## 🧪 Example
+
+```text
+Input:
+"abcabcbb"
+
+Output:
+3
+
+Explanation:
+The answer is "abc", with the length of 3.
+```
+
+---
+
+## 🧑‍💻 Java Implementation
+
+```java
+class Solution {
+    public int lengthOfLongestSubstring(String s) {
+        Map<Character, Integer> map = new HashMap<>();
+        int st = 0;
+        int res = 0;
+
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+
+            if (map.containsKey(c)) {
+                st = Math.max(st, map.get(c));
+            }
+
+            res = Math.max(res, i - st + 1);
+            map.put(c, i + 1);
+        }
+
+        return res;
+    }
+}
+```
+
+---
 
 
