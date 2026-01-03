@@ -309,6 +309,116 @@ class Solution {
 }
 ```
 
+
+
+# Subarray Sum Equals K
+
+## 📌 Problem Statement
+
+Given an integer array `nums` and an integer `k`, return the **total number of continuous subarrays whose sum equals `k`**.
+
+A subarray is a contiguous part of the array.
+
 ---
+
+## 💡 Approach (Prefix Sum + HashMap)
+
+This solution uses the **prefix sum** technique combined with a **hash map** to efficiently count valid subarrays in **O(n)** time.
+
+### Key Idea
+
+* Let `sum` be the cumulative sum of elements up to the current index.
+* If at any point `sum - k` has appeared before, it means there exists a subarray ending at the current index whose sum is `k`.
+* Store how many times each prefix sum has occurred using a hash map.
+
+### Why It Works
+
+If:
+
+```
+currentSum - previousSum = k
+```
+
+Then:
+
+```
+previousSum = currentSum - k
+```
+
+So we just need to count how many times `currentSum - k` has appeared so far.
+
+---
+
+## 🧠 Algorithm
+
+1. Initialize:
+
+   * `sum = 0` (running prefix sum)
+   * `res = 0` (result count)
+   * HashMap with `{0 → 1}` to handle subarrays starting at index 0
+2. Traverse the array:
+
+   * Add current number to `sum`
+   * If `(sum - k)` exists in the map, add its count to `res`
+   * Update the count of `sum` in the map
+3. Return `res`
+
+---
+
+## ✅ Java Implementation
+
+```java
+class Solution {
+    public int subarraySum(int[] nums, int k) {
+        int res = 0;
+        int sum = 0;
+
+        Map<Integer, Integer> map = new HashMap<>();
+        map.put(0, 1); // Base case
+
+        for (int num : nums) {
+            sum += num;
+
+            if (map.containsKey(sum - k)) {
+                res += map.get(sum - k);
+            }
+
+            map.put(sum, map.getOrDefault(sum, 0) + 1);
+        }
+
+        return res;
+    }
+}
+```
+
+---
+
+## ⏱️ Complexity Analysis
+
+* **Time Complexity:** `O(n)`
+* **Space Complexity:** `O(n)` (for the hash map)
+
+---
+
+## 🧪 Example
+
+**Input**
+
+```
+nums = [1, 1, 1]
+k = 2
+```
+
+**Output**
+
+```
+2
+```
+
+**Explanation**
+Subarrays with sum `2`:
+
+* `[1, 1]` (indices 0–1)
+* `[1, 1]` (indices 1–2)
 
 
