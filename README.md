@@ -422,3 +422,114 @@ Subarrays with sum `2`:
 * `[1, 1]` (indices 1–2)
 
 
+---
+
+# Longest Subarray with Sum K (Java)
+
+## 📌 Problem Statement
+
+Given an integer array `arr[]` and an integer `k`, find the **length of the longest subarray** whose sum is equal to `k`.
+
+This solution works for arrays containing **positive, negative, and zero values**.
+
+---
+
+## 💡 Approach: Prefix Sum + HashMap
+
+### Key Idea
+
+* Maintain a running **prefix sum** while iterating through the array.
+* If `prefixSum == k`, then the subarray from index `0` to `i` has sum `k`.
+* If `(prefixSum - k)` has appeared before, then the subarray between the previous index and current index has sum `k`.
+* Store **only the first occurrence** of each prefix sum to maximize subarray length.
+
+---
+
+## 🧠 Algorithm
+
+1. Initialize:
+
+   * `HashMap<Integer, Integer>` to store prefix sum and its first index
+   * `prefixSum = 0`
+   * `maxLen = 0`
+2. Traverse the array:
+
+   * Add current element to `prefixSum`
+   * Check if `prefixSum == k`
+   * Check if `(prefixSum - k)` exists in the map
+   * Update `maxLen` accordingly
+   * Store prefix sum if not already present
+3. Return `maxLen`
+
+---
+
+## ✅ Java Implementation
+
+```java
+import java.util.HashMap;
+
+class Solution {
+    public int longestSubarray(int[] arr, int k) {
+        HashMap<Integer, Integer> map = new HashMap<>();
+        int prefixSum = 0;
+        int maxLen = 0;
+
+        for (int i = 0; i < arr.length; i++) {
+            prefixSum += arr[i];
+
+            // Case 1: Subarray from 0 to i
+            if (prefixSum == k) {
+                maxLen = i + 1;
+            }
+
+            // Case 2: Subarray ending at i
+            if (map.containsKey(prefixSum - k)) {
+                maxLen = Math.max(maxLen, i - map.get(prefixSum - k));
+            }
+
+            // Store first occurrence only
+            if (!map.containsKey(prefixSum)) {
+                map.put(prefixSum, i);
+            }
+        }
+
+        return maxLen;
+    }
+}
+```
+
+---
+
+## 📊 Example
+
+**Input**
+
+```
+arr = [10, 5, 2, 7, 1, 9]
+k = 15
+```
+
+**Output**
+
+```
+4
+```
+
+**Explanation**
+The longest subarray with sum `15` is `[5, 2, 7, 1]`.
+
+---
+
+## ⏱ Complexity Analysis
+
+* **Time Complexity:** `O(n)`
+* **Space Complexity:** `O(n)`
+
+---
+
+## 🚀 Notes
+
+* This approach handles **negative numbers**, unlike the sliding window technique.
+* Efficient and suitable for large inputs.
+
+---
