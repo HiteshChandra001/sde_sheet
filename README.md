@@ -533,3 +533,123 @@ The longest subarray with sum `15` is `[5, 2, 7, 1]`.
 * Efficient and suitable for large inputs.
 
 ---
+
+---
+
+## 1. Reverse a Singly Linked List
+
+### 📌 Problem Description
+
+Given the head of a singly linked list, reverse the list and return the new head.
+
+### 🧠 Approach
+
+This solution uses an **iterative approach** with three pointers:
+
+* `prev` – keeps track of the previous node
+* `cur` – current node being processed
+* `next` – temporarily stores the next node
+
+By reversing the `next` pointer of each node, the list is reversed in-place.
+
+### ✅ Algorithm Steps
+
+1. Initialize `prev` as `null` and `cur` as `head`
+2. Iterate through the list:
+
+   * Save `cur.next` in `next`
+   * Point `cur.next` to `prev`
+   * Move `prev` and `cur` one step forward
+3. Return `prev` as the new head
+
+### ⏱️ Complexity
+
+* **Time Complexity:** `O(n)`
+* **Space Complexity:** `O(1)`
+
+### 💻 Code
+
+```java
+class Solution {
+    public ListNode reverseList(ListNode head) {
+        ListNode cur = head;
+        ListNode prev = null;
+
+        while (cur != null) {
+            ListNode next = cur.next;
+            cur.next = prev;
+            prev = cur;
+            cur = next;
+        }
+        return prev;
+    }
+}
+```
+
+---
+
+## 2. Find the Middle of a Singly Linked List
+
+### 📌 Problem Description
+
+Given the head of a singly linked list, return the **middle node**.
+
+* If the list has an even number of nodes, return the **second middle node**.
+
+### 🧠 Approach
+
+This solution uses the **two-pointer technique**:
+
+* `slow` pointer moves one step at a time
+* `fast` pointer moves two steps at a time
+
+When `fast` reaches the end, `slow` will be at the middle.
+
+### ✅ Algorithm Steps
+
+1. Initialize both `slow` and `fast` to `head`
+2. Move `slow` by one step and `fast` by two steps
+3. When `fast` reaches the end, return `slow`
+
+### ⏱️ Complexity
+
+* **Time Complexity:** `O(n)`
+* **Space Complexity:** `O(1)`
+
+### 💻 Code
+
+```java
+class Solution {
+    public ListNode middleNode(ListNode head) {
+        ListNode slow = head;
+        ListNode fast = head;
+
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+
+        return slow;
+    }
+}
+```
+
+---
+
+## 📦 ListNode Definition
+
+Both solutions use the following `ListNode` structure:
+
+```java
+public class ListNode {
+    int val;
+    ListNode next;
+    ListNode() {}
+    ListNode(int val) { this.val = val; }
+    ListNode(int val, ListNode next) {
+        this.val = val;
+        this.next = next;
+    }
+}
+```
+
