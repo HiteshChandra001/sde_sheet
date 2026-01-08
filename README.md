@@ -687,3 +687,40 @@ Given two sorted linked lists `list1` and `list2`, merge them into a single sort
 * **Space:** `O(1)` (in-place merge)
 
 ---
+
+
+
+## 2. Remove Nth Node From End of List
+
+### Problem
+
+Given the head of a linked list, remove the `n`th node from the end of the list and return the head.
+
+### Approach
+
+* Use a **dummy node** to handle edge cases (e.g., removing the head).
+* Use two pointers (`fast` and `slow`).
+* Move `fast` ahead by `n + 1` steps.
+* Move both pointers until `fast` reaches the end.
+* `slow.next` will be the node to remove.
+
+### Key Concepts
+
+* Two-pointer (fast & slow) technique
+* Dummy node to simplify edge cases
+* Single-pass traversal
+
+### Time & Space Complexity
+
+* **Time:** `O(n)`
+* **Space:** `O(1)`
+
+---
+
+## Why Use a Dummy Node?
+
+* Avoids special handling for head removal
+* Simplifies pointer logic
+* Makes code cleaner and safer
+
+---
