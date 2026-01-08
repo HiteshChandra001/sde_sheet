@@ -652,4 +652,38 @@ public class ListNode {
     }
 }
 ```
+Here’s a clean **README-style explanation** for both solutions, suitable for a GitHub repository or LeetCode notes.
 
+---
+
+# Linked List Problems – Java Solutions
+
+This repository contains Java solutions for common singly linked list problems using efficient pointer-based techniques.
+
+---
+
+## 1. Merge Two Sorted Lists
+
+### Problem
+
+Given two sorted linked lists `list1` and `list2`, merge them into a single sorted linked list and return its head.
+
+### Approach
+
+* Use a **dummy node** to simplify list construction.
+* Maintain a pointer (`res`) to build the merged list.
+* Compare values from both lists and append the smaller node.
+* Once one list is exhausted, attach the remaining nodes from the other list.
+
+### Key Concepts
+
+* Dummy node pattern
+* Iterative merging
+* Pointer manipulation
+
+### Time & Space Complexity
+
+* **Time:** `O(m + n)` where `m` and `n` are lengths of the lists
+* **Space:** `O(1)` (in-place merge)
+
+---
