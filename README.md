@@ -652,15 +652,7 @@ public class ListNode {
     }
 }
 ```
-Here’s a clean **README-style explanation** for both solutions, suitable for a GitHub repository or LeetCode notes.
 
----
-
-# Linked List Problems – Java Solutions
-
-This repository contains Java solutions for common singly linked list problems using efficient pointer-based techniques.
-
----
 
 ## 1. Merge Two Sorted Lists
 
