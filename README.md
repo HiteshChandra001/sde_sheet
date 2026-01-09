@@ -781,3 +781,50 @@ class Solution {
 * **Space:** `O(max(n, m))`
 
 ---
+
+
+
+## 🗑️ 2. Delete Node in a Linked List
+
+**Problem Link:**
+[https://leetcode.com/problems/delete-node-in-a-linked-list/](https://leetcode.com/problems/delete-node-in-a-linked-list/)
+
+---
+
+### 🔍 Problem Summary
+
+You are given a node (not the tail) in a singly linked list.
+Delete the given node **without access to the head** of the list.
+
+---
+
+### 💡 Key Insight
+
+Since we cannot access the previous node:
+
+* Copy the value from the **next node**
+* Skip the next node by adjusting pointers
+
+---
+
+### ✅ Java Solution
+
+```java
+class Solution {
+    public void deleteNode(ListNode node) {
+        if (node == null) return;
+
+        node.val = node.next.val;
+        node.next = node.next.next;
+    }
+}
+```
+
+---
+
+### ⏱ Complexity
+
+* **Time:** `O(1)`
+* **Space:** `O(1)`
+
+---
