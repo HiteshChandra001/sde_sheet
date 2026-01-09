@@ -716,3 +716,68 @@ Given the head of a linked list, remove the `n`th node from the end of the list 
 * Makes code cleaner and safer
 
 ---
+
+
+## 🧮 1. Add Two Numbers
+
+**Problem Link:**
+[https://leetcode.com/problems/add-two-numbers/](https://leetcode.com/problems/add-two-numbers/)
+
+### 🔍 Problem Summary
+
+You are given two non-empty linked lists representing two non-negative integers.
+The digits are stored in **reverse order**, and each node contains a single digit.
+
+Add the two numbers and return the sum as a linked list.
+
+---
+
+### 💡 Approach
+
+* Use a **dummy node** to simplify list construction
+* Traverse both lists simultaneously
+* Keep track of a **carry**
+* Add remaining carry at the end if needed
+
+---
+
+### ✅ Java Solution
+
+```java
+class Solution {
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        ListNode dummy = new ListNode(0);
+        ListNode temp = dummy;
+        int carry = 0;
+
+        while (l1 != null || l2 != null) {
+            int x = (l1 != null) ? l1.val : 0;
+            int y = (l2 != null) ? l2.val : 0;
+
+            int sum = x + y + carry;
+            carry = sum / 10;
+
+            temp.next = new ListNode(sum % 10);
+            temp = temp.next;
+
+            if (l1 != null) l1 = l1.next;
+            if (l2 != null) l2 = l2.next;
+        }
+
+        if (carry != 0) {
+            temp.next = new ListNode(carry);
+        }
+
+        return dummy.next;
+    }
+}
+```
+
+---
+
+### ⏱ Complexity
+
+* **Time:** `O(max(n, m))`
+* **Space:** `O(max(n, m))`
+
+---
