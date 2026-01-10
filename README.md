@@ -828,3 +828,89 @@ class Solution {
 * **Space:** `O(1)`
 
 ---
+
+# Intersection of Two Linked Lists
+
+## 📌 Problem Description
+
+Given the heads of two singly linked lists `headA` and `headB`, return the node at which the two lists intersect.
+If the two linked lists have no intersection, return `null`.
+
+The intersection is defined by **reference**, not by value.
+This means both lists must point to the **same node in memory** at some point.
+
+---
+
+## 💡 Approach
+
+This solution uses a **two-pointer technique** that avoids extra space and runs efficiently.
+
+### Key Idea
+
+* Use two pointers, one starting at `headA` and the other at `headB`
+* Traverse both lists simultaneously
+* When a pointer reaches the end of its list, redirect it to the head of the other list
+* If the lists intersect, the pointers will meet at the intersection node
+* If they don’t intersect, both pointers will eventually become `null`
+
+### Why This Works
+
+By switching heads, both pointers traverse the **same total length**:
+
+```
+LengthA + LengthB
+```
+
+This equalizes any difference in list lengths without explicitly calculating them.
+
+---
+
+## ✅ Implementation
+
+```java
+public class Solution {
+    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+        ListNode nA = headA, nB = headB;
+        
+        while (nA != nB) {
+            nA = (nA == null) ? headB : nA.next;
+            nB = (nB == null) ? headA : nB.next;
+        }
+        
+        return nA;
+    }
+}
+```
+
+---
+
+## ⏱️ Time & Space Complexity
+
+* **Time Complexity:** `O(m + n)`
+
+  * Where `m` and `n` are the lengths of the two linked lists
+* **Space Complexity:** `O(1)`
+
+  * No additional data structures are used
+
+---
+
+## 🧪 Example
+
+**Input:**
+
+```
+List A: 1 → 2 → 3
+                     ↘
+                       7 → 8
+                     ↗
+List B:      4 → 5
+```
+
+**Output:**
+
+```
+Node with value 7
+```
+
+---
