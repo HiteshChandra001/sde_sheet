@@ -914,3 +914,92 @@ Node with value 7
 ```
 
 ---
+
+
+# Linked List Cycle Detection
+
+## 📌 Problem Description
+
+Given the `head` of a singly linked list, determine whether the linked list contains a **cycle**.
+
+A cycle exists if a node can be reached again by continuously following the `next` pointers.
+
+---
+
+## 💡 Approach (Floyd’s Cycle Detection Algorithm)
+
+This solution uses the **Two Pointer Technique**, also known as **Floyd’s Tortoise and Hare algorithm**.
+
+### Key Idea
+
+* Use two pointers:
+
+  * **Slow pointer** moves one step at a time
+  * **Fast pointer** moves two steps at a time
+* If a cycle exists, the fast pointer will eventually meet the slow pointer
+* If the fast pointer reaches `null`, the list has no cycle
+
+---
+
+## ✅ Implementation
+
+```java
+public class Solution {
+    public boolean hasCycle(ListNode head) {
+        if (head == null || head.next == null) return false;
+
+        ListNode slow = head, fast = head;
+
+        while (slow != fast) {
+            if (fast == null || fast.next == null) return false;
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+
+        return true;
+    }
+}
+```
+
+---
+
+## ⏱️ Time & Space Complexity
+
+* **Time Complexity:** `O(n)`
+
+  * Each pointer traverses the list at most once
+* **Space Complexity:** `O(1)`
+
+  * No extra memory is used
+
+---
+
+## 🧪 Example
+
+### Example 1 (Cycle Exists)
+
+```
+1 → 2 → 3 → 4
+     ↑       ↓
+     ← ← ← ←
+```
+
+**Output:** `true`
+
+### Example 2 (No Cycle)
+
+```
+1 → 2 → 3 → 4 → null
+```
+
+**Output:** `false`
+
+---
+
+## ⭐ Advantages of This Approach
+
+* Extremely efficient
+* No additional data structures required
+* Widely accepted and optimal for cycle detection
+
+---
