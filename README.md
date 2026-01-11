@@ -1003,3 +1003,118 @@ public class Solution {
 * Widely accepted and optimal for cycle detection
 
 ---
+
+
+# Palindrome Linked List (Java)
+
+## 📌 Problem Statement
+
+Given the head of a singly linked list, determine whether the list is a **palindrome**.
+A linked list is a palindrome if it reads the same forward and backward.
+
+**Example:**
+
+* `1 → 2 → 2 → 1` → `true`
+* `1 → 2` → `false`
+
+---
+
+## 💡 Approach
+
+This solution checks whether a linked list is a palindrome in **O(n)** time and **O(1)** extra space by:
+
+1. **Finding the middle** of the linked list using the fast & slow pointer technique.
+2. **Reversing the second half** of the list.
+3. **Comparing** the first half and the reversed second half node by node.
+4. **Restoring** the list to its original form (optional but good practice).
+
+---
+
+## ⏱️ Complexity Analysis
+
+* **Time Complexity:** `O(n)`
+* **Space Complexity:** `O(1)`
+
+---
+
+## 🧠 Algorithm Steps
+
+1. If the list has 0 or 1 node, return `true`.
+2. Use two pointers (`slow`, `fast`) to locate the middle.
+3. Reverse the list starting from the middle.
+4. Compare values from the start and from the reversed half.
+5. Restore the list (optional).
+6. Return the result.
+
+---
+
+## 🧩 Java Implementation
+
+```java
+class Solution {
+    public boolean isPalindrome(ListNode head) {
+        if (head == null || head.next == null) return true;
+
+        // Step 1: Find the middle of the linked list
+        ListNode slow = head, fast = head;
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+
+        // Step 2: Reverse the second half of the list
+        ListNode secondHalf = reverseList(slow);
+
+        // Step 3: Compare the first and second halves
+        ListNode firstHalf = head, temp = secondHalf;
+        while (temp != null) {
+            if (firstHalf.val != temp.val) return false;
+            firstHalf = firstHalf.next;
+            temp = temp.next;
+        }
+
+        // Step 4: Restore the list (optional)
+        reverseList(secondHalf);
+
+        return true;
+    }
+
+    // Helper method to reverse a linked list
+    private ListNode reverseList(ListNode head) {
+        ListNode prev = null, current = head;
+        while (current != null) {
+            ListNode nextNode = current.next;
+            current.next = prev;
+            prev = current;
+            current = nextNode;
+        }
+        return prev;
+    }
+}
+```
+
+---
+
+## 🧱 ListNode Definition (for reference)
+
+```java
+class ListNode {
+    int val;
+    ListNode next;
+
+    ListNode(int val) {
+        this.val = val;
+        this.next = null;
+    }
+}
+```
+
+---
+
+## ✅ Key Takeaways
+
+* Fast & slow pointers help find the middle efficiently.
+* Reversing half the list avoids extra memory usage.
+* Restoring the list preserves original structure (important in interviews).
+
+---
