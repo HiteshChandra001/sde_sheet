@@ -1118,3 +1118,107 @@ class ListNode {
 * Restoring the list preserves original structure (important in interviews).
 
 ---
+
+# Detect Cycle in a Linked List (Floyd’s Algorithm)
+
+## Problem
+
+Given the head of a singly linked list, determine if the list contains a cycle.
+If a cycle exists, return the node where the cycle begins.
+If there is no cycle, return `null`.
+
+A cycle exists if a node’s `next` pointer points to a previous node in the list.
+
+---
+
+## Approach: Floyd’s Tortoise and Hare Algorithm
+
+This solution uses **Floyd’s Cycle Detection Algorithm**, which works in two phases:
+
+### Phase 1: Detect if a cycle exists
+
+* Use two pointers:
+
+  * `slow` moves one step at a time
+  * `fast` moves two steps at a time
+* If there is a cycle, the two pointers will eventually meet.
+* If `fast` reaches `null`, there is no cycle.
+
+### Phase 2: Find the entry point of the cycle
+
+* Once `slow` and `fast` meet:
+
+  * Set one pointer (`p1`) to the head of the list
+  * Set another pointer (`p2`) to the meeting point
+* Move both pointers one step at a time
+* The node where they meet again is the **start of the cycle**
+
+---
+
+## Code Explanation
+
+```java
+public ListNode detectCycle(ListNode head) {
+    if (head == null || head.next == null) return null;
+
+    ListNode slow = head, fast = head;
+    boolean hasCycle = false;
+
+    // Phase 1: Detect cycle
+    while (fast != null && fast.next != null) {
+        slow = slow.next;
+        fast = fast.next.next;
+        if (slow == fast) {
+            hasCycle = true;
+            break;
+        }
+    }
+
+    if (!hasCycle) return null;
+
+    // Phase 2: Find cycle entry
+    ListNode p1 = head, p2 = slow;
+    while (p1 != p2) {
+        p1 = p1.next;
+        p2 = p2.next;
+    }
+    return p1;
+}
+```
+
+---
+
+## Why This Works
+
+Let:
+
+* `a` = distance from head to cycle start
+* `b` = distance from cycle start to meeting point
+* `c` = remaining cycle length
+
+When the pointers meet:
+
+```
+2(a + b) = a + b + c + b
+=> a = c
+```
+
+This means moving one pointer from the head and one from the meeting point will cause them to meet at the cycle entry.
+
+---
+
+## Complexity Analysis
+
+* **Time Complexity:** `O(n)`
+* **Space Complexity:** `O(1)` (no extra data structures)
+
+---
+
+## Edge Cases
+
+* Empty list → return `null`
+* Single node with no cycle → return `null`
+* Single node pointing to itself → returns that node
+
+---
+
