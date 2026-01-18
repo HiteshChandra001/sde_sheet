@@ -1222,3 +1222,136 @@ This means moving one pointer from the head and one from the meeting point will 
 
 ---
 
+
+
+# Reverse Nodes in k-Group (Linked List)
+
+## 📌 Problem Overview
+
+Given the head of a singly linked list, reverse the nodes of the list **k at a time**, and return the modified list.
+
+* Nodes that do not form a complete group of size `k` at the end should **remain unchanged**.
+* You may not alter node values, only node connections.
+
+---
+
+## 💡 Approach
+
+This solution uses **iterative linked list manipulation** with constant extra space.
+
+### Key Ideas
+
+1. **Dummy Node**
+
+   * A dummy node is used to simplify edge cases (like reversing from the head).
+   * `dummy.next` always points to the start of the list.
+
+2. **Group Traversal**
+
+   * For each group, we locate the `k`th node using a helper function.
+   * If fewer than `k` nodes remain, we stop processing.
+
+3. **In-place Reversal**
+
+   * Reverse exactly `k` nodes using standard pointer manipulation.
+   * Connect the reversed group back to the previous and next parts of the list.
+
+---
+
+## 🔁 Algorithm Steps
+
+1. Initialize a dummy node pointing to `head`.
+2. Set `groupPrev` to the dummy node.
+3. While a valid `k`-group exists:
+
+   * Find the `k`th node from `groupPrev`.
+   * Reverse the nodes between `groupPrev.next` and the `k`th node.
+   * Reconnect the reversed group.
+   * Move `groupPrev` forward for the next iteration.
+4. Return `dummy.next` as the new head.
+
+---
+
+## 🧠 Helper Method
+
+### `getKthNode(ListNode cur, int k)`
+
+* Moves `k` steps forward from `cur`
+* Returns:
+
+  * The `k`th node if it exists
+  * `null` if fewer than `k` nodes remain
+
+---
+
+## ⏱️ Complexity Analysis
+
+* **Time Complexity:** `O(n)`
+  Each node is visited once.
+* **Space Complexity:** `O(1)`
+  Reversal is done in-place with no extra data structures.
+
+---
+
+## 🧪 Example
+
+**Input:**
+
+```
+head = [1,2,3,4,5], k = 2
+```
+
+**Output:**
+
+```
+[2,1,4,3,5]
+```
+
+---
+
+## 🧩 Code
+
+```java
+class Solution {
+    public ListNode reverseKGroup(ListNode head, int k) {
+        
+        ListNode dummy = new ListNode(-1);
+        dummy.next = head;
+
+        ListNode groupPrev = dummy;
+
+        while (true) {
+            ListNode kthNode = getKthNode(groupPrev, k);
+            if (kthNode == null) break;
+
+            ListNode groupNext = kthNode.next;
+
+            ListNode cur = groupPrev.next;
+            ListNode prev = groupNext;
+
+            for (int i = 0; i < k; i++) {
+                ListNode temp = cur.next;
+                cur.next = prev;
+                prev = cur;
+                cur = temp;
+            }
+
+            ListNode temp = groupPrev.next;
+            groupPrev.next = kthNode;
+            groupPrev = temp;
+        }
+
+        return dummy.next;
+    }
+
+    public ListNode getKthNode(ListNode cur, int k) {
+        while (cur != null && k > 0) {
+            cur = cur.next;
+            k--;
+        }
+        return cur;
+    }
+}
+```
+
+
