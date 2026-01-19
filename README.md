@@ -1353,5 +1353,108 @@ class Solution {
     }
 }
 ```
+---
 
+# Rotate List (Rotate Right)
 
+## 🧩 Problem
+
+Given the head of a singly linked list, rotate the list to the right by `k` places.
+
+### Example
+
+```
+Input:  1 → 2 → 3 → 4 → 5, k = 2
+Output: 4 → 5 → 1 → 2 → 3
+```
+
+---
+
+## 💡 Approach
+
+1. **Handle edge cases**
+
+   * If the list is empty, has one node, or `k == 0`, return the head as-is.
+
+2. **Find the length and tail**
+
+   * Traverse the list to calculate its length.
+   * Keep track of the last node (tail).
+
+3. **Make the list circular**
+
+   * Connect the tail’s `next` pointer to the head.
+
+4. **Normalize rotations**
+
+   * Since rotating by `k` where `k > length` is redundant:
+
+     ```
+     k = k % length
+     ```
+   * Convert right rotation to left traversal:
+
+     ```
+     steps = length - k
+     ```
+
+5. **Break the circle**
+
+   * Move `steps` nodes forward.
+   * The next node becomes the new head.
+   * Set `next = null` to break the cycle.
+
+---
+
+## ✅ Algorithm
+
+```java
+class Solution {
+    public ListNode rotateRight(ListNode head, int k) {
+        if (head == null || head.next == null || k == 0) return head;
+
+        int len = 1;
+        ListNode temp = head;
+
+        // Find length and tail
+        while (temp.next != null) {
+            temp = temp.next;
+            len++;
+        }
+
+        // Make circular
+        temp.next = head;
+
+        k = k % len;
+        k = len - k;
+
+        // Move to new tail
+        while (k-- > 0) {
+            temp = temp.next;
+        }
+
+        // Break circle
+        head = temp.next;
+        temp.next = null;
+
+        return head;
+    }
+}
+```
+
+---
+
+## ⏱ Time & Space Complexity
+
+* **Time Complexity:** `O(n)`
+* **Space Complexity:** `O(1)`
+
+---
+
+## 🔍 Key Insights
+
+* Making the list circular simplifies rotation.
+* Always normalize `k` using modulo.
+* A single traversal is enough to solve the problem efficiently.
+
+---
