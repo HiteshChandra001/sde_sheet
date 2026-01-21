@@ -94,3 +94,90 @@ nums = [-1, 0, 1, 2, -1, -4]
 ```
 
 ---
+
+---
+
+# Trapping Rain Water – Two Pointer Solution
+
+## Problem
+
+Given an array `height` where each element represents the height of a bar, compute how much water can be trapped after raining.
+
+This is the classic **Trapping Rain Water** problem (LeetCode #42).
+
+---
+
+## Approach
+
+This solution uses a **two-pointer technique** to achieve optimal performance.
+
+### Key Idea
+
+* Use two pointers: `l` (left) and `r` (right).
+* Track the maximum height seen so far from both sides:
+
+  * `leftMax`
+  * `rightMax`
+* Water trapped at any index depends on the **minimum** of the maximum heights to its left and right.
+
+### Algorithm
+
+1. Initialize two pointers at both ends of the array.
+2. Move the pointer with the smaller maximum height inward.
+3. Accumulate trapped water as:
+
+   ```
+   trapped water = currentMax - currentHeight
+   ```
+4. Continue until both pointers meet.
+
+---
+
+## Code
+
+```java
+class Solution {
+    public int trap(int[] height) {
+        int l = 0, r = height.length - 1;
+        int res = 0;
+        int leftMax = 0, rightMax = 0;
+
+        while (l < r) {
+            leftMax = Math.max(leftMax, height[l]);
+            rightMax = Math.max(rightMax, height[r]);
+
+            if (leftMax < rightMax) {
+                res += leftMax - height[l++];
+            } else {
+                res += rightMax - height[r--];
+            }
+        }
+        return res;
+    }
+}
+```
+
+---
+
+## Example
+
+**Input**
+
+```
+height = [0,1,0,2,1,0,1,3,2,1,2,1]
+```
+
+**Output**
+
+```
+6
+```
+
+---
+
+## Complexity Analysis
+
+* **Time Complexity:** `O(n)`
+* **Space Complexity:** `O(1)` (constant extra space)
+
+---
