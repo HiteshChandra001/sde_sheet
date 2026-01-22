@@ -181,3 +181,96 @@ height = [0,1,0,2,1,0,1,3,2,1,2,1]
 * **Space Complexity:** `O(1)` (constant extra space)
 
 ---
+
+# Remove Duplicates from Sorted Array
+
+## 📌 Problem Statement
+
+Given a **sorted integer array `nums`**, remove the duplicates **in-place** such that each unique element appears only once.
+The relative order of the elements should be kept the same.
+
+Return the number of unique elements (`k`).
+The first `k` elements of `nums` should contain the final result.
+
+> Extra space is not allowed (O(1) space).
+
+---
+
+## 💡 Approach
+
+Since the array is already **sorted**, all duplicate elements are adjacent.
+
+We use:
+
+* A **pointer `i`** to iterate through the array
+* A **counter `c`** to track the position where the next unique element should be placed
+
+Whenever two adjacent elements are different, we store the current element at index `c` and increment `c`.
+
+At the end, we add the last element and return `c + 1` as the count of unique elements.
+
+---
+
+## 🧠 Algorithm
+
+1. Initialize:
+
+   * `c = 0` (index for unique elements)
+   * `i = 0` (iterator)
+2. Traverse the array while `i < n - 1`
+3. If `nums[i] != nums[i + 1]`:
+
+   * Assign `nums[c] = nums[i]`
+   * Increment `c`
+4. After the loop, store the last element
+5. Return `c + 1`
+
+---
+
+## ✅ Java Implementation
+
+```java
+class Solution {
+    public int removeDuplicates(int[] nums) {
+        int n = nums.length;
+        int c = 0;
+        int i = 0;
+
+        while (i < n - 1) {
+            if (nums[i] != nums[i + 1]) {
+                nums[c] = nums[i];
+                c++;
+            }
+            i++;
+        }
+        nums[c] = nums[i];
+        return c + 1;
+    }
+}
+```
+
+---
+
+## 📊 Example
+
+**Input**
+
+```
+nums = [1,1,2,2,3]
+```
+
+**Output**
+
+```
+k = 3
+nums = [1,2,3,_ ,_]
+```
+
+---
+
+## ⏱️ Complexity Analysis
+
+* **Time Complexity:** `O(n)`
+* **Space Complexity:** `O(1)` (in-place modification)
+
+---
