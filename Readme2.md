@@ -274,3 +274,65 @@ nums = [1,2,3,_ ,_]
 * **Space Complexity:** `O(1)` (in-place modification)
 
 ---
+
+# Find Max Consecutive Ones
+
+## 📌 Problem Description
+
+Given a binary array `nums`, return the **maximum number of consecutive 1s** in the array.
+
+### Example
+
+```
+Input:  [1,1,0,1,1,1]
+Output: 3
+Explanation: The longest run of consecutive 1s is [1,1,1].
+```
+
+---
+
+## 🧠 Approach
+
+The solution uses a **single pass** through the array while keeping track of:
+
+* `c` → current count of consecutive `1`s
+* `max` → maximum count found so far
+
+### Logic
+
+* If the current element is `1`, increment the counter.
+* Update the maximum value whenever the counter increases.
+* If the element is `0`, reset the counter to `0`.
+
+This ensures optimal performance with minimal space usage.
+
+---
+
+## 💻 Code Implementation (Java)
+
+```java
+class Solution {
+    public int findMaxConsecutiveOnes(int[] nums) {
+        int c = 0;
+        int max = 0;
+        for (int i : nums) {
+            if (i == 1) {
+                c++;
+                max = Math.max(max, c);
+            } else {
+                c = 0;
+            }
+        }
+        return max;
+    }
+}
+```
+
+---
+
+## ⏱️ Time & Space Complexity
+
+* **Time Complexity:** `O(n)` — traverses the array once
+* **Space Complexity:** `O(1)` — uses constant extra space
+
+---
